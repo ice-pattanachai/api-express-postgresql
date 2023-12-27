@@ -36,8 +36,8 @@ router.post('/', jsonParser, function (req, res, next) {
           const token = jwt.sign({ username: user.username }, secret, {
             expiresIn: '1h'
           });
-          console.log('Login success:' +'  '+req.body.username +'  '+ ':user');
-          return res.json({ status: 'ok', message: 'Login success', token });
+          console.log('Login success:' + '  ' + req.body.username + '  ' + ':user');
+          return res.json({ username: user.username, status: 'ok', message: 'Login success', token });
         } else {
           return res.json({ status: 'error', message: 'Login failed' });
         }

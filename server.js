@@ -2,9 +2,9 @@ const express = require('express')
 const app = express()
 const cors = require('cors');
 
-app.use(cors({ origin: 'http://localhost:4200' }));
+app.use(cors({ origin: 'http://localhost:5000' }));
 
-const portstart = 3000
+const portstart = 3030
 const sequelize = require('./database/sequelize');
 
 const select = require('./content/select_test');
