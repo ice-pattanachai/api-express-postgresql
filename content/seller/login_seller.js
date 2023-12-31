@@ -33,11 +33,11 @@ router.post('/', jsonParser, function (req, res, next) {
       const user = result.rows[0];
       bcrypt.compare(req.body.password_hash, user.password_hash, function (err, isLogin) {
         if (isLogin) {
-          const token = jwt.sign({ username: user.username }, secret, {
+          const token = jwt.sign({ username: user.username, class: 'seller', roles: 'seller' }, secret, {
             expiresIn: '1h'
           });
-          console.log('Login success:' +'  '+req.body.username +'  '+ ':admin');
-          return res.json({ status: 'ok', message: 'Login success', token });
+          console.log('Login success:' + '  ' + req.body.username + '  ' + ':seller');
+          return res.json({ username: user.username, class: 'seller', status: 'ok', message: 'Login success', token });
         } else {
           return res.json({ status: 'error', message: 'Login failed' });
         }

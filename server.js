@@ -19,21 +19,21 @@ const roles = require('./content/roles');
 // const { getImages } = require('./api/get_images');
 
 app.use('/test', select);
-app.use('/api/login_seller' , login_seller);
-app.use('/api/login_user' , login_user);
-app.use('/api/register_user' , register_user);
-app.use('/api/register_seller' , register_seller);
+app.use('/api/login_seller', login_seller);
+app.use('/api/login_user', login_user);
+app.use('/api/register_user', register_user);
+app.use('/api/register_seller', register_seller);
 // app.use('/api_orm/register_admin' , register_admin_orm);
-app.use('/api/authen' , authen);
-app.use('/help' , help);
-app.use('/api/roles' , roles);
+app.use('/api/authen', authen);
+app.use('/help', help);
+app.use('/api/roles', roles);
 // app.post('/api/getimages', getImages);
 
 app.get('/', (req, res) => {
   res.send('<h3>/help</h3>')
 })
 
-app.listen(portstart , async  () => {
+app.listen(portstart, async () => {
   await sequelize.sync()
-  console.log('Start server at port '+ portstart +'.')
+  console.log('Start server at port ' + portstart + '.')
 });
