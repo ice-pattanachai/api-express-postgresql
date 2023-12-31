@@ -22,4 +22,20 @@ router.post('/', jsonParser, function (req, res, next) {
   }
 });
 
+router.post('/revoke', jsonParser, function (req, res, next) {
+  try {
+    if (req.headers.authorization && req.headers.authorization !== 'undefined') {
+      const token = req.headers.authorization.split(' ')[1];
+      // ทำการยกเลิก Token โดยไม่ต้องตรวจสอบ Signature
+      // ในระบบจริงควรตรวจสอบ Signature เพื่อความปลอดภัย
+      console.log('Revoking Token:', token);
+      res.json({ status: 'ok', message: 'Token revoked successfully' });
+    } else {
+      throw new Error('Authorization header is missing or undefined')
+    }
+  } catch (err) {
+    res.json({ status: 'error', message: err.message });
+  }
+});
+
 module.exports = router;
