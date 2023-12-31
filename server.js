@@ -17,6 +17,8 @@ const authen = require('./content/authen');
 const help = require('./content/help');
 const roles = require('./content/roles');
 // const { getImages } = require('./api/get_images');
+const selest_products = require('./content/products/select_products');
+const insert_products = require('./content/products/insert_products');
 
 app.use('/test', select);
 app.use('/api/login_seller', login_seller);
@@ -28,6 +30,8 @@ app.use('/api/authen', authen);
 app.use('/help', help);
 app.use('/api/roles', roles);
 // app.post('/api/getimages', getImages);
+app.use('/api/selest_products', selest_products);
+app.use('/api/insert_products', insert_products);
 
 app.get('/', (req, res) => {
   res.send('<h3>/help</h3>')

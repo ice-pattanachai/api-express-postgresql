@@ -1,4 +1,4 @@
-const db = require('../database/db');
+const db = require('../../database/db');
 const multer = require('multer');
 const path = require('path');
 
