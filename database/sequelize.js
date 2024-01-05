@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config();
 
 const sequelize = new Sequelize({
@@ -16,6 +16,5 @@ sequelize
   .catch((err) => {
     console.error('Error connecting to Sequelize PostgreSQL database:', err);
   });
-
 
 module.exports = sequelize;

@@ -16,9 +16,10 @@ const register_seller = require('./content/seller/register_seller');
 const authen = require('./content/authen');
 const help = require('./content/help');
 const roles = require('./content/roles');
+const ProductSearchAll = require('./content/products/search_all');
+const ProductSearchID = require('./content/products/search_id');
 // const { getImages } = require('./api/get_images');
-
-const orm = require('./content_orm/orm');
+const ProductInsert = require('./content/products/insert_products');
 
 app.use('/test', select);
 app.use('/api/login_seller', login_seller);
@@ -28,9 +29,10 @@ app.use('/api/register_seller', register_seller);
 app.use('/api/authen', authen);
 app.use('/help', help);
 app.use('/api/roles', roles);
+app.use('/api/products_all', ProductSearchAll);
+app.use('/api/products_id', ProductSearchID);
 // app.post('/api/getimages', getImages);
-
-app.use('/api/products_orm', orm);
+app.use('/api/insert', ProductInsert);
 
 app.get('/', (req, res) => {
   res.send('<h3>/help</h3>')
