@@ -20,6 +20,7 @@ const ProductSearchAll = require('./content/products/search_all');
 const ProductSearchID = require('./content/products/search_id');
 // const { getImages } = require('./api/get_images');
 const ProductInsert = require('./content/products/insert_products');
+const ProductUpdate = require('./content/products/edit_products');
 
 app.use('/test', select);
 app.use('/api/login_seller', login_seller);
@@ -32,7 +33,9 @@ app.use('/api/roles', roles);
 app.use('/api/products_all', ProductSearchAll);
 app.use('/api/products_id', ProductSearchID);
 // app.post('/api/getimages', getImages);
-app.use('/api/insert', ProductInsert);
+app.use('/api/add_product', ProductInsert);
+app.use('/api/products_edit', ProductUpdate);
+
 
 app.get('/', (req, res) => {
   res.send('<h3>/help</h3>')

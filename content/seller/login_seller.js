@@ -59,7 +59,7 @@ router.post('/', jsonParser, function (req, res, next) {
   }
 
   db.pool.query(
-    'SELECT * FROM "LittleShopFront"."admin" WHERE username=$1',
+    'SELECT * FROM "LittleShopFront"."sellers" WHERE username=$1',
     [req.body.username],
     function (err, result) {
       if (err) {
@@ -69,7 +69,7 @@ router.post('/', jsonParser, function (req, res, next) {
         return res.json({ status: 'error', message: 'No user found' });
       }
       const user = result.rows[0];
-      const userIdQuery = 'SELECT id FROM "LittleShopFront"."admin" WHERE username=$1';
+      const userIdQuery = 'SELECT id FROM "LittleShopFront"."sellers" WHERE username=$1';
       db.pool.query(userIdQuery, [user.username], function (err, userIdResult) {
         if (err) {
           return res.json({ status: 'error', message: err });
@@ -81,7 +81,7 @@ router.post('/', jsonParser, function (req, res, next) {
         bcrypt.compare(req.body.password_hash, user.password_hash, function (err, isLogin) {
           if (isLogin) {
             const token = jwt.sign({userId, username: user.username, class: 'seller', roles: 'seller', userId }, secret, {
-              expiresIn: '1h'
+              expiresIn: '24h'
             });
             console.log('Login success:' + '  ' + req.body.username + '  ' + ':seller');
             return res.json({userId, username: user.username,  class: 'seller', status: 'ok', message: 'Login success', token });

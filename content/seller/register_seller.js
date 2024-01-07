@@ -95,13 +95,13 @@ router.post('/', async (req, res, next) => {
 
     const hash = await bcrypt.hash(req.body.password_hash, saltRounds);
 
-    const newUsers = await Seller.create({
+    const newSeller = await Seller.create({
       username,
       password_hash: hash,
       name,
     });
 
-    res.status(201).json({ message: 'Succeed', status: 'ok', Seller: newUsers });
+    res.status(201).json({ message: 'Succeed', status: 'ok', Seller: newSeller });
   } catch (error) {
     next(error);
   }

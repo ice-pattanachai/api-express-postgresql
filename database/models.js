@@ -12,7 +12,7 @@ const Product = sequelize.define('product', {
         allowNull: false,
     },
     product_status: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
     },
     price_per_piece: {
@@ -155,6 +155,15 @@ const PurchaseOrders = sequelize.define('purchase_orders', {
     },
 }, { schema: process.env.SCHEMA, })
 
+const Set = sequelize.define('set', {
+    shopname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+    },
+    
+}, { schema: process.env.SCHEMA, })
+
 Product.hasMany(Categories, { foreignKey: 'product_id', targetKey: 'id' });
 Categories.belongsTo(Product, { foreignKey: 'product_id', sourceKey: 'id' });
 
@@ -164,8 +173,8 @@ Images.belongsTo(Product, { foreignKey: 'product_id', sourceKey: 'id' });
 Product.hasMany(Promotion, { foreignKey: 'product_id', targetKey: 'id' });
 Promotion.belongsTo(Product, { foreignKey: 'product_id', sourceKey: 'id' });
 
-Seller.hasMany(LoginHistory, { foreignKey: 'seller_id', targetKey: 'id' });
-LoginHistory.belongsTo(Seller, { foreignKey: 'seller_id', sourceKey: 'id' });
+// Seller.hasMany(LoginHistory, { foreignKey: 'seller_id', targetKey: 'id' });
+// LoginHistory.belongsTo(Seller, { foreignKey: 'seller_id', sourceKey: 'id' });
 
 Users.hasMany(LoginHistory, { foreignKey: 'users_id', targetKey: 'id' });
 LoginHistory.belongsTo(Users, { foreignKey: 'users_id', sourceKey: 'id' });
@@ -192,5 +201,6 @@ module.exports = {
     LoginHistory,
     Roles,
     Addresses,
-    PurchaseOrders
+    PurchaseOrders,
+    Set
 };
