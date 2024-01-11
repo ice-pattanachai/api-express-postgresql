@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../database/db');
 
 router.post('/', function (req, res) {
-  db.pool.query('SELECT * FROM "LittleShopFront"."categories"', (error, results, fields) => {
+  db.pool.query('SELECT * FROM "LittleShopFront"."users"', (error, results, fields) => {
     if (error) throw error;
     res.send(results);
   });

@@ -111,6 +111,10 @@ const Addresses = sequelize.define('addresses', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    postalcode: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
     phone: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -161,7 +165,7 @@ const Set = sequelize.define('set', {
         allowNull: false,
         unique: true,
     },
-    
+
 }, { schema: process.env.SCHEMA, })
 
 Product.hasMany(Categories, { foreignKey: 'product_id', targetKey: 'id' });

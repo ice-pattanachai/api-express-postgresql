@@ -18,9 +18,14 @@ const help = require('./content/help');
 const roles = require('./content/roles');
 const ProductSearchAll = require('./content/products/search_all');
 const ProductSearchID = require('./content/products/search_id');
-// const { getImages } = require('./api/get_images');
 const ProductInsert = require('./content/products/insert_products');
 const ProductUpdate = require('./content/products/edit_products');
+const SearchIdUser = require('./content/user/search_id');
+const SearchIdSeller = require('./content/seller/search_id');
+const SellerUpdate = require('./content/seller/edit_seller');
+const UserUpdate = require('./content/user/edit_user');
+const AssressesUserInsert = require('./content/user/addresses');
+const CheckPassword = require('./content/check_password');
 
 app.use('/test', select);
 app.use('/api/login_seller', login_seller);
@@ -32,10 +37,14 @@ app.use('/help', help);
 app.use('/api/roles', roles);
 app.use('/api/products_all', ProductSearchAll);
 app.use('/api/products_id', ProductSearchID);
-// app.post('/api/getimages', getImages);
 app.use('/api/add_product', ProductInsert);
 app.use('/api/products_edit', ProductUpdate);
-
+app.use('/api/user_id', SearchIdUser);
+app.use('/api/seller_id', SearchIdSeller);
+app.use('/api/edit_seller', SellerUpdate);
+app.use('/api/edit_user', UserUpdate);
+app.use('/api/assresses_user', AssressesUserInsert);
+app.use('/api/check_password', CheckPassword);
 
 app.get('/', (req, res) => {
   res.send('<h3>/help</h3>')
