@@ -26,6 +26,7 @@ const SellerUpdate = require('./content/seller/edit_seller');
 const UserUpdate = require('./content/user/edit_user');
 const AssressesUserInsert = require('./content/user/addresses');
 const CheckPassword = require('./content/check_password');
+const PurchaseOrders = require('./content/products/purchase_orders');
 
 app.use('/test', select);
 app.use('/api/login_seller', login_seller);
@@ -45,13 +46,14 @@ app.use('/api/edit_seller', SellerUpdate);
 app.use('/api/edit_user', UserUpdate);
 app.use('/api/assresses_user', AssressesUserInsert);
 app.use('/api/check_password', CheckPassword);
+app.use('/api/purchase_orders', PurchaseOrders)
 
 app.get('/', (req, res) => {
   res.send('<h3>/help</h3>')
 })
 
 app.listen(portstart, async () => {
-  await sequelize.sync()
-  // await sequelize.sync({ force: true })
+  // await sequelize.sync()
+  await sequelize.sync({ force: true })
   console.log('Start server at port ' + portstart + '.')
 });

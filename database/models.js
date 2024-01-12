@@ -141,22 +141,50 @@ const Roles = sequelize.define('roles', {
 }, { schema: process.env.SCHEMA })
 
 const PurchaseOrders = sequelize.define('purchase_orders', {
-    cargo: {
+    addresses_name: { //ชื่อจัดส่ง
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    address: { //ที่อยู่จัดส่ง
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    postalcode: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    time: {
-        type: DataTypes.TIME,
+    phone: {
+        type: DataTypes.STRING,
         allowNull: false,
     },
-    quantity: {
+    quantity: { //จำนวนการสั่งซื้อ
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    total_price: {
+    total_price: { //ราคาสินค้ารวม ของสินค้าชิ้นนั้นๆ
         type: DataTypes.DOUBLE,
         allowNull: false,
     },
+    status: { //สถานะ ยืนยันคำสั่งซื้อ / รอยืนยัน
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+    },
+    parcel_number: { //เลขพัสดุ
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    payment_format: { //รูปแบบการชำระเงิน 
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    confirm_payment: {  //ยืนยันการชำระเงิน หากชำระแล้วหรือเก็บปลายทาง = true / หากยังไม่ชำระ = false
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+    }
+    // เหลือหน้ายืนยันการสั่งซื้อของ seller
+    // ห้าดูการสั่งศื้อของ user
+    // ปุ่มกดสั่งซื้อสินค้า
+    // แก้ไขชื่อร้าน ไม่รู้จะทำไหม!!
 }, { schema: process.env.SCHEMA, })
 
 const Set = sequelize.define('set', {
@@ -183,8 +211,8 @@ Promotion.belongsTo(Product, { foreignKey: 'product_id', sourceKey: 'id' });
 Users.hasMany(LoginHistory, { foreignKey: 'users_id', targetKey: 'id' });
 LoginHistory.belongsTo(Users, { foreignKey: 'users_id', sourceKey: 'id' });
 
-Roles.hasMany(Users, { foreignKey: 'roles_id', targetKey: 'id' });
-Users.belongsTo(Roles, { foreignKey: 'roles_id', sourceKey: 'id' });
+// Roles.hasMany(Users, { foreignKey: 'roles_id', targetKey: 'id' });
+// Users.belongsTo(Roles, { foreignKey: 'roles_id', sourceKey: 'id' });
 
 Users.hasMany(Addresses, { foreignKey: 'user_id', targetKey: 'id' });
 Addresses.belongsTo(Users, { foreignKey: 'user_id', sourceKey: 'id' });
