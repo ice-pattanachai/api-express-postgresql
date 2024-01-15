@@ -141,11 +141,11 @@ const Roles = sequelize.define('roles', {
 }, { schema: process.env.SCHEMA })
 
 const PurchaseOrders = sequelize.define('purchase_orders', {
-    addresses_name: { //ชื่อจัดส่ง
+    addresses_name: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    address: { //ที่อยู่จัดส่ง
+    address: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -157,34 +157,30 @@ const PurchaseOrders = sequelize.define('purchase_orders', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    quantity: { //จำนวนการสั่งซื้อ
+    quantity: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    total_price: { //ราคาสินค้ารวม ของสินค้าชิ้นนั้นๆ
+    total_price: {
         type: DataTypes.DOUBLE,
         allowNull: false,
     },
-    status: { //สถานะ ยืนยันคำสั่งซื้อ / รอยืนยัน
+    status: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
     },
-    parcel_number: { //เลขพัสดุ
+    parcel_number: {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    payment_format: { //รูปแบบการชำระเงิน 
+    payment_format: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    confirm_payment: {  //ยืนยันการชำระเงิน หากชำระแล้วหรือเก็บปลายทาง = true / หากยังไม่ชำระ = false
+    confirm_payment: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
     }
-    // เหลือหน้ายืนยันการสั่งซื้อของ seller
-    // ห้าดูการสั่งศื้อของ user
-    // ปุ่มกดสั่งซื้อสินค้า
-    // แก้ไขชื่อร้าน ไม่รู้จะทำไหม!!
 }, { schema: process.env.SCHEMA, })
 
 const Set = sequelize.define('set', {

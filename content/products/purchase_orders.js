@@ -10,10 +10,6 @@ router.post('/add', async (req, res, next) => {
     const {
       addresses_name, address, postalcode, phone, quantity, total_price, status, parcel_number, payment_format, confirm_payment, user_id, product_id,
     } = data;
-    // if (!addresses_name || !address || !postalcode || !phone || !quantity || !total_price || !status || !payment_format || !confirm_payment || !user_id || !product_id) {
-    //   res.status(400).json({ message: 'Incomplete information. Please proceed again.' });
-    //   return;
-    // }
 
     const newOrders = await PurchaseOrders.create({
       addresses_name,
@@ -79,22 +75,33 @@ router.post('/search', async (req, res, next) => {
   }
 });
 
+router.post('/search/all', async (req, res, next) => {
+  try {
+    const products = await PurchaseOrders.findAll({
+      include: [
+        { model: Product },
+        { model: Users },
+      ]
+    });
+    res.json(products);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post('/edit', async (req, res, next) => {
   try {
     const ordersId = req.body.id;
     const data = req.body;
 
-    // ตรวจสอบว่า req.body มีข้อมูลที่จำเป็นที่จะทำการอัปเดตหรือไม่
     if (!ordersId || Object.keys(data).length === 0) {
       return res.status(400).json({ message: 'Invalid update data' });
     }
 
-    // ทำการอัปเดตข้อมูล
     const updatedOrders = await PurchaseOrders.update(data, {
       where: { id: ordersId }
     });
 
-    // ตรวจสอบว่ามีข้อมูลถูกอัปเดตหรือไม่
     if (updatedOrders[0] === 0) {
       return res.status(404).json({ message: 'Product not found' });
     }

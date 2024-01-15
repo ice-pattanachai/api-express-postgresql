@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const { Users, Seller } = require('../database/models');
 const saltRounds = 12;
 
-// Express Route for checking password
 router.post('/user', async (req, res) => {
     const { id, password_hash } = req.body;
     try {

@@ -8,10 +8,8 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         const originalFileName = file.originalname;
         const time = new Date().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
-        // const formattedTime = time.replace(/[:/\\]/g, ''); // ลบตัวอักษรพิเศษที่ไม่สามารถใช้ในชื่อไฟล์ได้
         const uniqueString = Date.now().toString(36) + Math.random().toString(36).substring(2);
         const fileNameWithoutSpaces = (uniqueString + '_' + originalFileName).replace(/\s/g, '');
-        // cb(null, uniqueString + '_' + originalFileName , time);
         cb(null, fileNameWithoutSpaces, time);
     }
 });
@@ -28,7 +26,6 @@ const upload = multer({
 }).single('image');
 
 router.post('/', async (req, res, next) => {
-    // const data = req.body;
     try {
         upload(req, res, async function (err) {
             if (err) {
@@ -69,28 +66,13 @@ router.post('/', async (req, res, next) => {
             });
 
             const imageInfo = {
-                number: 1, // Adjust as needed
+                number: 1,
                 path: file.path,
                 product_id: newProduct.id,
             };
 
             const imagesData = [imageInfo];
             await Images.bulkCreate(imagesData);
-
-            // const categoriesData = categories.map(category => ({
-            //     category_name: category.category_name,
-            //     description: category.description,
-            //     product_id: newProduct.id,
-            // }));
-            // await Categories.bulkCreate(categoriesData);
-
-            // res.status(201).json({
-            //     message: 'Succeed',
-            //     status: 'ok',
-            //     product: newProduct,
-            //     images: imagesData,
-            //     categories: categoriesData
-            // });
         });
     } catch (error) {
         next(error);

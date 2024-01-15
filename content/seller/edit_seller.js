@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Seller } = require('../../database/models');
-const bcrypt = require('bcrypt'); // นำเข้า bcrypt เพื่อให้สามารถใช้ hash รหัสผ่านได้
-const validation = require('../verify');
+const bcrypt = require('bcrypt');
 const saltRounds = 12;
 
 router.post('/', async (req, res, next) => {
@@ -14,7 +13,6 @@ router.post('/', async (req, res, next) => {
             return res.status(400).json({ message: 'Invalid update data' });
         }
 
-        // ตรวจสอบการเปลี่ยนแปลงของรหัสผ่าน
         if (data.password_hash) {
             data.password_hash = await bcrypt.hash(data.password_hash, saltRounds);
         }

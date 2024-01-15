@@ -9,44 +9,6 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const secret = process.env.ENCRYPT;
 
-// router.post('/', jsonParser, function (req, res, next) {
-//   if (validation.containsDisallowedSql(req.body.username)) {
-//     res.json({ status: 'error', message: 'Username contains disallowed SQL commands' });
-//     return;
-//   }
-
-//   if (validation.containsDisallowedSql(req.body.password_hash)) {
-//     res.json({ status: 'error', message: 'Password contains disallowed SQL commands' });
-//     return;
-//   }
-
-//   db.pool.query(
-//     'SELECT * FROM "LittleShopFront"."users" WHERE username=$1',
-//     [req.body.username],
-//     function (err, result) {
-//       if (err) {
-//         return res.json({ status: 'error', message: err });
-//       }
-//       if (!result.rows || result.rows.length === 0) {
-//         return res.json({ status: 'error', message: 'No user found' });
-//       }
-//       const user = result.rows[0];
-//       bcrypt.compare(req.body.password_hash, user.password_hash, function (err, isLogin) {
-//         if (isLogin) {
-//           const token = jwt.sign({ username: user.username, class: 'user', roles: 'user' }, secret, {
-//             expiresIn: '1h'
-//           });
-//           console.log('Login success:' + '  ' + req.body.username + '  ' + ':user');
-//           return res.json({ username: user.username, class: 'user', status: 'ok', message: 'Login success', token });
-//         } else {
-//           return res.json({ status: 'error', message: 'Login failed' });
-//         }
-//       });
-//     }
-//   );
-// });
-
-// module.exports = router;
 router.post('/', jsonParser, function (req, res, next) {
   if (validation.containsDisallowedSql(req.body.username)) {
     res.json({ status: 'error', message: 'Username contains disallowed SQL commands' });
@@ -80,11 +42,11 @@ router.post('/', jsonParser, function (req, res, next) {
         const userId = userIdResult.rows[0].id;
         bcrypt.compare(req.body.password_hash, user.password_hash, function (err, isLogin) {
           if (isLogin) {
-            const token = jwt.sign({userId, username: user.username, class: 'user', roles: 'user', userId }, secret, {
+            const token = jwt.sign({ userId, username: user.username, class: 'user', roles: 'user', userId }, secret, {
               expiresIn: '3h'
             });
             console.log('Login success:' + '  ' + req.body.username + '  ' + ':user');
-            return res.json({userId, username: user.username,  class: 'user', status: 'ok', message: 'Login success', token });
+            return res.json({ userId, username: user.username, class: 'user', status: 'ok', message: 'Login success', token });
           } else {
             return res.json({ status: 'error', message: 'Login failed' });
           }

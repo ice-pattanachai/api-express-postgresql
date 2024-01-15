@@ -14,7 +14,6 @@ const login_user = require('./content/user/login_user');
 const register_user = require('./content/user/register_user');
 const register_seller = require('./content/seller/register_seller');
 const authen = require('./content/authen');
-const help = require('./content/help');
 const roles = require('./content/roles');
 const ProductSearchAll = require('./content/products/search_all');
 const ProductSearchID = require('./content/products/search_id');
@@ -34,7 +33,6 @@ app.use('/api/login_user', login_user);
 app.use('/api/register_user', register_user);
 app.use('/api/register_seller', register_seller);
 app.use('/api/authen', authen);
-app.use('/help', help);
 app.use('/api/roles', roles);
 app.use('/api/products_all', ProductSearchAll);
 app.use('/api/products_id', ProductSearchID);
@@ -53,7 +51,7 @@ app.get('/', (req, res) => {
 })
 
 app.listen(portstart, async () => {
-  await sequelize.sync()
-  // await sequelize.sync({ force: true })
+  // await sequelize.sync()
+  await sequelize.sync({ force: true })
   console.log('Start server at port ' + portstart + '.')
 });

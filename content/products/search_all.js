@@ -29,10 +29,10 @@ router.get('/image', async (req, res) => {
         const imageFolderPath = '../';
         const imagePath = path.join(__dirname, '..', imageFolderPath, decodeURIComponent(image.path));
 
-        console.log(imagePath); // พิมพ์ที่อยู่ไฟล์ใน console เพื่อตรวจสอบ
+        console.log(imagePath);
         res.sendFile(imagePath);
     } catch (error) {
-        console.log(error); // พิมพ์ข้อผิดพลาดใน console เพื่อตรวจสอบ
+        console.log(error);
         if (error.name === 'SequelizeConnectionError') {
             return res.status(500).json({ message: 'Database connection error' });
         }
