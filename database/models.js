@@ -150,7 +150,7 @@ const PurchaseOrders = sequelize.define('purchase_orders', {
         allowNull: false,
     },
     postalcode: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     phone: {

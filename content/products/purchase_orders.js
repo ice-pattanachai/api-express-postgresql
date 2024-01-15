@@ -8,13 +8,12 @@ router.post('/add', async (req, res, next) => {
 
   try {
     const {
-      addresses_name, address, postalcode, phone, quantity, total_price, status, payment_format, confirm_payment, user_id, product_id,
+      addresses_name, address, postalcode, phone, quantity, total_price, status, parcel_number, payment_format, confirm_payment, user_id, product_id,
     } = data;
-
-    if (!addresses_name || !address || !postalcode || !phone || !quantity || !total_price || !status || !payment_format || !confirm_payment || !user_id || !product_id) {
-      res.status(400).json({ message: 'Incomplete information. Please proceed again.' });
-      return;
-    }
+    // if (!addresses_name || !address || !postalcode || !phone || !quantity || !total_price || !status || !payment_format || !confirm_payment || !user_id || !product_id) {
+    //   res.status(400).json({ message: 'Incomplete information. Please proceed again.' });
+    //   return;
+    // }
 
     const newOrders = await PurchaseOrders.create({
       addresses_name,
@@ -24,6 +23,7 @@ router.post('/add', async (req, res, next) => {
       quantity,
       total_price,
       status,
+      parcel_number,
       payment_format,
       confirm_payment,
       user_id,
@@ -36,12 +36,28 @@ router.post('/add', async (req, res, next) => {
   }
 });
 
+router.post('/search/userId', async (req, res, next) => {
+  const { user_id } = req.body;
+  console.log(user_id);
+  try {
+    const orders = await PurchaseOrders.findAll({
+      where: {
+        user_id: user_id,
+      },
+    });
+
+    res.status(200).json({ message: 'Success', status: 'ok', orders });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post('/search', async (req, res, next) => {
   try {
     const { Id } = req.body;
 
     if (!Id) {
-      res.status(400).json({ message: 'กรุณาระบุ id ของสินค้าที่ต้องการค้นหา' });
+      res.status(400).json({ message: 'กรุณาระบุ id ' });
       return;
     }
 
@@ -53,7 +69,7 @@ router.post('/search', async (req, res, next) => {
     });
 
     if (!orders) {
-      res.status(404).json({ message: 'ไม่พบสินค้าที่มี id ที่ระบุ' });
+      res.status(404).json({ message: 'ไม่พบ id ที่ระบุ' });
       return;
     }
 
