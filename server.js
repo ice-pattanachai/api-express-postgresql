@@ -51,7 +51,7 @@ app.get('/', (req, res) => {
 })
 
 app.listen(portstart, async () => {
-  // await sequelize.sync()
-  await sequelize.sync({ force: true })
+  await sequelize.sync()
+  // await sequelize.sync({ force: true })
   console.log('Start server at port ' + portstart + '.')
 });
