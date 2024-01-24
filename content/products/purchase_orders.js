@@ -48,6 +48,22 @@ router.post('/search/userId', async (req, res, next) => {
   }
 });
 
+router.post('/search/Id', async (req, res, next) => {
+  const { id } = req.body;
+  console.log(id);
+  try {
+    const orders = await PurchaseOrders.findAll({
+      where: {
+        id: id,
+      },
+    });
+
+    res.status(200).json({ message: 'Success', status: 'ok', orders });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post('/search', async (req, res, next) => {
   try {
     const { Id } = req.body;

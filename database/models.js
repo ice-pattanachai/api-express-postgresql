@@ -140,6 +140,33 @@ const Roles = sequelize.define('roles', {
     },
 }, { schema: process.env.SCHEMA })
 
+const Receipt = sequelize.define('receipt', {
+    order_receipt_number: { //เลขใบสั่งซื้อ คิดว่าจะเอาtime กับ ราคารวมสินค้ามาเขียน
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+    },
+    receipt_make_payment: { //ชำระเงิน  true = ชำระ fase = ยังไม่ชำระ
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        unique: true,
+    },
+    receipt_visibility: { //ชำระเงิน  true = เห็น  fase = ไม่เห็น ไว้แสดงในส่วน user 
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        unique: true,
+    },
+    receipt_status: { //สถานะ บิล true = ปกติ flase = ยกเลิกบิล/ยกเลิกการสั่งซื้อ
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        unique: true,
+    },
+    receipt_confirm_payment: {
+        type: DataTypes.BOOLEAN, // true = ชำระเงินเสร็จสิน false = ยังไม่จำะเงิน   ให้ตัดออกมาจก purchase_orders confirm_payment
+        allowNull: false,
+    }
+}, { schema: process.env.SCHEMA })
+
 const PurchaseOrders = sequelize.define('purchase_orders', {
     addresses_name: {
         type: DataTypes.STRING,
@@ -181,13 +208,18 @@ const PurchaseOrders = sequelize.define('purchase_orders', {
         type: DataTypes.BOOLEAN,
         allowNull: false,
     }
+
 }, { schema: process.env.SCHEMA, })
 
-const Set = sequelize.define('set', {
+const Set = sequelize.define('sets_up_shop', {
     shopname: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
+    },
+    img_promptpay_path: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
 
 }, { schema: process.env.SCHEMA, })
@@ -219,6 +251,9 @@ PurchaseOrders.belongsTo(Users, { foreignKey: 'user_id', sourceKey: 'id' });
 Product.hasMany(PurchaseOrders, { foreignKey: 'product_id', targetKey: 'id' });
 PurchaseOrders.belongsTo(Product, { foreignKey: 'product_id', sourceKey: 'id' });
 
+PurchaseOrders.hasMany(Receipt, { foreignKey: 'receipt_id', targetKey: 'id' });
+Receipt.belongsTo(PurchaseOrders, { foreignKey: 'receipt_id', sourceKey: 'id' });
+
 module.exports = {
     Product,
     Categories,
@@ -230,5 +265,6 @@ module.exports = {
     Roles,
     Addresses,
     PurchaseOrders,
-    Set
+    Set,
+    Receipt
 };
