@@ -121,24 +121,24 @@ const Addresses = sequelize.define('addresses', {
     },
 }, { schema: process.env.SCHEMA, })
 
-const LoginHistory = sequelize.define('login_history', {
-    login_time: {
-        type: DataTypes.TIME,
-        allowNull: false,
-    },
-    ip_address: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-}, { schema: process.env.SCHEMA })
+// const LoginHistory = sequelize.define('login_history', {
+//     login_time: {
+//         type: DataTypes.TIME,
+//         allowNull: false,
+//     },
+//     ip_address: {
+//         type: DataTypes.STRING,
+//         allowNull: false,
+//     },
+// }, { schema: process.env.SCHEMA })
 
-const Roles = sequelize.define('roles', {
-    role_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-    },
-}, { schema: process.env.SCHEMA })
+// const Roles = sequelize.define('roles', {
+//     role_name: {
+//         type: DataTypes.STRING,
+//         allowNull: false,
+//         unique: true,
+//     },
+// }, { schema: process.env.SCHEMA })
 
 const Receipt = sequelize.define('receipt', {
     order_receipt_number: { //เลขใบสั่งซื้อ คิดว่าจะเอาtime กับ ราคารวมสินค้ามาเขียน
@@ -162,9 +162,13 @@ const Receipt = sequelize.define('receipt', {
         unique: true,
     },
     receipt_confirm_payment: {
-        type: DataTypes.BOOLEAN, // true = ชำระเงินเสร็จสิน false = ยังไม่จำะเงิน   ให้ตัดออกมาจก purchase_orders confirm_payment
+        type: DataTypes.BOOLEAN, // true = ชำระเงินเสร็จสิน false = ยังไม่จำะเงิน  ให้ตัดออกมาจก purchase_orders confirm_payment
         allowNull: false,
-    }
+    },
+    payment_format: { //รูปแบบชำระเงิน ตัดจาก PurchaseOrders
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
 }, { schema: process.env.SCHEMA })
 
 const PurchaseOrders = sequelize.define('purchase_orders', {
@@ -192,7 +196,7 @@ const PurchaseOrders = sequelize.define('purchase_orders', {
         type: DataTypes.DOUBLE,
         allowNull: false,
     },
-    status: {
+    status: { //ยืนยันคำสั่งซื้อ
         type: DataTypes.BOOLEAN,
         allowNull: false,
     },
@@ -200,15 +204,6 @@ const PurchaseOrders = sequelize.define('purchase_orders', {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    payment_format: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    confirm_payment: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-    }
-
 }, { schema: process.env.SCHEMA, })
 
 const Set = sequelize.define('sets_up_shop', {
@@ -233,14 +228,8 @@ Images.belongsTo(Product, { foreignKey: 'product_id', sourceKey: 'id' });
 Product.hasMany(Promotion, { foreignKey: 'product_id', targetKey: 'id' });
 Promotion.belongsTo(Product, { foreignKey: 'product_id', sourceKey: 'id' });
 
-// Seller.hasMany(LoginHistory, { foreignKey: 'seller_id', targetKey: 'id' });
-// LoginHistory.belongsTo(Seller, { foreignKey: 'seller_id', sourceKey: 'id' });
-
-Users.hasMany(LoginHistory, { foreignKey: 'users_id', targetKey: 'id' });
-LoginHistory.belongsTo(Users, { foreignKey: 'users_id', sourceKey: 'id' });
-
-// Roles.hasMany(Users, { foreignKey: 'roles_id', targetKey: 'id' });
-// Users.belongsTo(Roles, { foreignKey: 'roles_id', sourceKey: 'id' });
+// Users.hasMany(LoginHistory, { foreignKey: 'users_id', targetKey: 'id' });
+// LoginHistory.belongsTo(Users, { foreignKey: 'users_id', sourceKey: 'id' });
 
 Users.hasMany(Addresses, { foreignKey: 'user_id', targetKey: 'id' });
 Addresses.belongsTo(Users, { foreignKey: 'user_id', sourceKey: 'id' });
@@ -251,8 +240,8 @@ PurchaseOrders.belongsTo(Users, { foreignKey: 'user_id', sourceKey: 'id' });
 Product.hasMany(PurchaseOrders, { foreignKey: 'product_id', targetKey: 'id' });
 PurchaseOrders.belongsTo(Product, { foreignKey: 'product_id', sourceKey: 'id' });
 
-PurchaseOrders.hasMany(Receipt, { foreignKey: 'receipt_id', targetKey: 'id' });
-Receipt.belongsTo(PurchaseOrders, { foreignKey: 'receipt_id', sourceKey: 'id' });
+Receipt.hasMany(PurchaseOrders, { foreignKey: 'receipt_id', targetKey: 'id' });
+PurchaseOrders.belongsTo(Receipt, { foreignKey: 'receipt_id', sourceKey: 'id' });
 
 module.exports = {
     Product,
@@ -261,8 +250,8 @@ module.exports = {
     Promotion,
     Seller,
     Users,
-    LoginHistory,
-    Roles,
+    // LoginHistory,
+    // Roles,
     Addresses,
     PurchaseOrders,
     Set,

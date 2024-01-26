@@ -1,14 +1,14 @@
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const { PurchaseOrders, Product, Users } = require('../../database/models');
+const { PurchaseOrders, Product, Users, Receipt } = require('../../database/models');
 
 router.post('/add', async (req, res, next) => {
   const data = req.body;
 
   try {
     const {
-      addresses_name, address, postalcode, phone, quantity, total_price, status, parcel_number, payment_format, confirm_payment, user_id, product_id,
+      addresses_name, address, postalcode, phone, quantity, total_price, status, parcel_number, user_id, product_id, receipt_id,
     } = data;
 
     const newOrders = await PurchaseOrders.create({
@@ -20,10 +20,9 @@ router.post('/add', async (req, res, next) => {
       total_price,
       status,
       parcel_number,
-      payment_format,
-      confirm_payment,
       user_id,
       product_id,
+      receipt_id,
     });
 
     res.status(201).json({ message: 'Succeed', status: 'ok', PurchaseOrders: newOrders });

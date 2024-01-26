@@ -26,6 +26,7 @@ const UserUpdate = require('./content/user/edit_user');
 const AssressesUserInsert = require('./content/user/addresses');
 const CheckPassword = require('./content/check_password');
 const PurchaseOrders = require('./content/products/purchase_orders');
+const Receipt = require('./content/products/receipt');
 
 app.use('/test', select);
 app.use('/api/login_seller', login_seller);
@@ -45,6 +46,7 @@ app.use('/api/edit_user', UserUpdate);
 app.use('/api/assresses_user', AssressesUserInsert);
 app.use('/api/check_password', CheckPassword);
 app.use('/api/purchase_orders', PurchaseOrders)
+app.use('/api/receipt', Receipt)
 
 app.get('/', (req, res) => {
   res.send('<h3>/help</h3>')
