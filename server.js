@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 app.use(express.json());
 
-app.use(cors({ origin: 'http://localhost:5000' }));
+app.use(cors({ origin: 'http://localhost:5001' }));
 
 const portstart = 3030
 const sequelize = require('./database/sequelize');
