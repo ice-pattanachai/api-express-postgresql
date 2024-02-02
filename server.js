@@ -27,6 +27,7 @@ const AssressesUserInsert = require('./content/user/addresses');
 const CheckPassword = require('./content/check_password');
 const PurchaseOrders = require('./content/products/purchase_orders');
 const Receipt = require('./content/products/receipt');
+const timeserver = require('./content/time');
 
 app.use('/test', select);
 app.use('/api/login_seller', login_seller);
@@ -47,6 +48,7 @@ app.use('/api/assresses_user', AssressesUserInsert);
 app.use('/api/check_password', CheckPassword);
 app.use('/api/purchase_orders', PurchaseOrders)
 app.use('/api/receipt', Receipt)
+app.use('/api/time', timeserver)
 
 app.get('/', (req, res) => {
   res.send('<h3>/help</h3>')
@@ -56,4 +58,5 @@ app.listen(portstart, async () => {
   await sequelize.sync()
   // await sequelize.sync({ force: true })
   console.log('Start server at port ' + portstart + '.')
+  console.log(`[${new Date().toLocaleString()}] Request received`);
 });

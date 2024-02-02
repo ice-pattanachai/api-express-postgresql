@@ -76,6 +76,7 @@ router.post('/search', async (req, res, next) => {
       include: [
         { model: Product },
         { model: Users },
+        { model: Receipt },
       ]
     });
 
@@ -96,6 +97,7 @@ router.post('/search/all', async (req, res, next) => {
       include: [
         { model: Product },
         { model: Users },
+        { model: Receipt },
       ]
     });
     res.json(products);
