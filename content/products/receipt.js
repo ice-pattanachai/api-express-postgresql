@@ -11,6 +11,8 @@ router.post('/add', async (req, res, next) => {
             receipt_status, receipt_confirm_payment, payment_format,
         } = data;
 
+        console.log("Body :", data);
+
         const newReceipt = await Receipt.create({
             order_receipt_number,
             receipt_make_payment,
@@ -20,8 +22,11 @@ router.post('/add', async (req, res, next) => {
             payment_format,
         });
 
+        console.log("SQL Query:", newReceipt.toString());
+        console.log("Create Receipt Result:", newReceipt);
         res.status(201).json({ message: 'Succeed', status: 'ok', Receipt: newReceipt });
     } catch (error) {
+        console.error("Sequelize Error:", error);
         next(error);
     }
 });

@@ -144,22 +144,19 @@ const Receipt = sequelize.define('receipt', {
     order_receipt_number: { //เลขใบสั่งซื้อ คิดว่าจะเอาtime กับ ราคารวมสินค้ามาเขียน
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        // unique: true,
     },
-    receipt_make_payment: { //ชำระเงิน  true = ชำระ fase = ยังไม่ชำระ
+    receipt_make_payment: { //ชำระเงิน  true = ชำระ false = ยังไม่ชำระ
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        unique: true,
     },
-    receipt_visibility: { //ชำระเงิน  true = เห็น  fase = ไม่เห็น ไว้แสดงในส่วน user 
+    receipt_visibility: { //ชำระเงิน  true = เห็น  false = ไม่เห็น ไว้แสดงในส่วน user 
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        unique: true,
     },
-    receipt_status: { //สถานะ บิล true = ปกติ flase = ยกเลิกบิล/ยกเลิกการสั่งซื้อ
+    receipt_status: { //สถานะ บิล true = ปกติ false = ยกเลิกบิล/ยกเลิกการสั่งซื้อ
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        unique: true,
     },
     receipt_confirm_payment: {
         type: DataTypes.BOOLEAN, // true = ชำระเงินเสร็จสิน false = ยังไม่จำะเงิน  ให้ตัดออกมาจก purchase_orders confirm_payment
