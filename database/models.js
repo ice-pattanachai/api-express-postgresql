@@ -141,6 +141,30 @@ const Addresses = sequelize.define('addresses', {
 // }, { schema: process.env.SCHEMA })
 
 const Receipt = sequelize.define('receipt', {
+    addresses_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    postalcode: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    phone: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    status: { //ยืนยันคำสั่งซื้อ
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+    },
+    parcel_number: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    }, // ^ ตัดมาจาก PurchaseOrders
     order_receipt_number: { //เลขใบสั่งซื้อ คิดว่าจะเอาtime กับ ราคารวมสินค้ามาเขียน
         type: DataTypes.STRING,
         allowNull: false,
@@ -169,22 +193,6 @@ const Receipt = sequelize.define('receipt', {
 }, { schema: process.env.SCHEMA })
 
 const PurchaseOrders = sequelize.define('purchase_orders', {
-    addresses_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    address: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    postalcode: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    phone: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
     quantity: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -192,14 +200,6 @@ const PurchaseOrders = sequelize.define('purchase_orders', {
     total_price: {
         type: DataTypes.DOUBLE,
         allowNull: false,
-    },
-    status: { //ยืนยันคำสั่งซื้อ
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-    },
-    parcel_number: {
-        type: DataTypes.STRING,
-        allowNull: true,
     },
 }, { schema: process.env.SCHEMA, })
 

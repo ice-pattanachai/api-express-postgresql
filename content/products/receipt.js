@@ -3,17 +3,66 @@ const express = require('express');
 const router = express.Router();
 const { Receipt } = require('../../database/models');
 
+// router.post('/add', async (req, res, next) => {
+//     const data = req.body;
+//     try {
+//         const {
+//             order_receipt_number,
+//             receipt_make_payment,
+//             receipt_visibility,
+//             receipt_status,
+//             receipt_confirm_payment,
+//             payment_format,
+//         } = data;
+
+//         console.log("Body :", data);
+
+//         const newReceipt = await Receipt.create({
+//             order_receipt_number,
+//             receipt_make_payment,
+//             receipt_visibility,
+//             receipt_status,
+//             receipt_confirm_payment,
+//             payment_format,
+//         });
+
+//         console.log("SQL Query:", newReceipt.toString());
+//         console.log("Create Receipt Result:", newReceipt);
+//         res.status(201).json({ message: 'Succeed', status: 'ok', Receipt: newReceipt });
+//     } catch (error) {
+//         console.error("Sequelize Error:", error);
+//         next(error);
+//     }
+// });
 router.post('/add', async (req, res, next) => {
     const data = req.body;
     try {
         const {
-            order_receipt_number, receipt_make_payment, receipt_visibility,
-            receipt_status, receipt_confirm_payment, payment_format,
+            addresses_name,
+            address,
+            postalcode,
+            phone,
+            status,
+            parcel_number,
+            // ^new
+            order_receipt_number,
+            receipt_make_payment,
+            receipt_visibility,
+            receipt_status,
+            receipt_confirm_payment,
+            payment_format,
         } = data;
 
         console.log("Body :", data);
 
         const newReceipt = await Receipt.create({
+            addresses_name,
+            address,
+            postalcode,
+            phone,
+            status,
+            parcel_number,
+            // ^new
             order_receipt_number,
             receipt_make_payment,
             receipt_visibility,
@@ -40,17 +89,23 @@ router.post('/search/all', async (req, res, next) => {
     }
 });
 
-router.post('/search/Id', async (req, res, next) => {
-    const { id } = req.body;
+router.post('/search/id', async (req, res, next) => {
+    const { receiptId } = req.body;
+    const id = receiptId
     console.log(id);
     try {
-        const Receipt_orders = await Receipt.findAll({
+        if (!id) {
+            res.status(400).json({ message: 'กรุณาระบุ id ของใบการสั่งซื้อ' });
+            return;
+        }
+
+        const data = await Receipt.findAll({
             where: {
                 id: id,
             },
         });
 
-        res.status(200).json({ message: 'Success', status: 'ok', Receipt_orders });
+        res.status(200).json({ message: 'Success', status: 'ok', data });
     } catch (error) {
         next(error);
     }

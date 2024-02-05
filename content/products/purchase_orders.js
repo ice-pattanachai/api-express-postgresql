@@ -8,18 +8,28 @@ router.post('/add', async (req, res, next) => {
 
   try {
     const {
-      addresses_name, address, postalcode, phone, quantity, total_price, status, parcel_number, user_id, product_id, receipt_id,
+      // addresses_name,
+      // address,
+      // postalcode,
+      // phone,
+      quantity,
+      total_price,
+      // status,
+      // parcel_number,
+      user_id,
+      product_id,
+      receipt_id,
     } = data;
 
     const newOrders = await PurchaseOrders.create({
-      addresses_name,
-      address,
-      postalcode,
-      phone,
+      // addresses_name,
+      // address,
+      // postalcode,
+      // phone,
       quantity,
       total_price,
-      status,
-      parcel_number,
+      // status,
+      // parcel_number,
       user_id,
       product_id,
       receipt_id,
@@ -46,6 +56,23 @@ router.post('/search/userId', async (req, res, next) => {
     next(error);
   }
 });
+
+router.post('/search/receiptId', async (req, res, next) => {
+  const { receipt_id } = req.body;
+  console.log(receipt_id);
+  try {
+    const orders = await PurchaseOrders.findAll({
+      where: {
+        receipt_id: receipt_id,
+      },
+    });
+
+    res.status(200).json({ message: 'Success', status: 'ok', orders });
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 router.post('/search/Id', async (req, res, next) => {
   const { id } = req.body;
