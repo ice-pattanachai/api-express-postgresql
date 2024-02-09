@@ -4,8 +4,9 @@ const { Product, Images, Categories, Promotion } = require('../../database/model
 
 router.post('/', async (req, res, next) => {
     try {
+        console.log(req.body);
         const { productId } = req.body;
-
+        console.log(productId);
         if (!productId) {
             res.status(400).json({ message: 'กรุณาระบุ id ของสินค้าที่ต้องการค้นหา' });
             return;

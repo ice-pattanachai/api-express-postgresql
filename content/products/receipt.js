@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const { Receipt } = require('../../database/models');
+const { Receipt, PurchaseOrders } = require('../../database/models');
 
 // router.post('/add', async (req, res, next) => {
 //     const data = req.body;
@@ -43,7 +43,7 @@ router.post('/add', async (req, res, next) => {
             postalcode,
             phone,
             status,
-            parcel_number,
+            // parcel_number,
             // ^new
             order_receipt_number,
             receipt_make_payment,
@@ -61,7 +61,7 @@ router.post('/add', async (req, res, next) => {
             postalcode,
             phone,
             status,
-            parcel_number,
+            // parcel_number,
             // ^new
             order_receipt_number,
             receipt_make_payment,
@@ -82,7 +82,11 @@ router.post('/add', async (req, res, next) => {
 
 router.post('/search/all', async (req, res, next) => {
     try {
-        const Receipt_orders = await Receipt.findAll({});
+        const Receipt_orders = await Receipt.findAll({
+            include: [
+                { model: PurchaseOrders },
+            ]
+        });
         res.json(Receipt_orders);
     } catch (error) {
         next(error);
@@ -103,6 +107,29 @@ router.post('/search/id', async (req, res, next) => {
             where: {
                 id: id,
             },
+        });
+
+        res.status(200).json({ message: 'Success', status: 'ok', data });
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.post('/search/order_number', async (req, res, next) => {
+    const { order_receipt_number } = req.body;
+    console.log(order_receipt_number);
+    try {
+        if (!order_receipt_number) {
+            res.status(400).json({ message: 'กรุณาระบุ เลขการสั่งซื้อ ของใบการสั่งซื้อ' });
+            return;
+        }
+
+        const data = await Receipt.findAll({
+            where: {
+                order_receipt_number: order_receipt_number,
+            }, include: [
+                { model: PurchaseOrders },
+            ]
         });
 
         res.status(200).json({ message: 'Success', status: 'ok', data });

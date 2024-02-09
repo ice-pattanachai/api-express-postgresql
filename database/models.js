@@ -121,6 +121,26 @@ const Addresses = sequelize.define('addresses', {
     },
 }, { schema: process.env.SCHEMA, })
 
+
+const Addresses_Shop = sequelize.define('addresses_shop', {
+    fullname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    postalcode: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    phone: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+}, { schema: process.env.SCHEMA, })
+
 // const LoginHistory = sequelize.define('login_history', {
 //     login_time: {
 //         type: DataTypes.TIME,
@@ -161,9 +181,15 @@ const Receipt = sequelize.define('receipt', {
         type: DataTypes.BOOLEAN,
         allowNull: false,
     },
+    transport_company_name: { // ชื่อ บริษัทขนส่ง
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: 'no data',
+    },
     parcel_number: {
         type: DataTypes.STRING,
         allowNull: true,
+        defaultValue: 'no data',
     }, // ^ ตัดมาจาก PurchaseOrders
     order_receipt_number: { //เลขใบสั่งซื้อ คิดว่าจะเอาtime กับ ราคารวมสินค้ามาเขียน
         type: DataTypes.STRING,
@@ -231,6 +257,9 @@ Promotion.belongsTo(Product, { foreignKey: 'product_id', sourceKey: 'id' });
 Users.hasMany(Addresses, { foreignKey: 'user_id', targetKey: 'id' });
 Addresses.belongsTo(Users, { foreignKey: 'user_id', sourceKey: 'id' });
 
+Set.hasMany(Addresses_Shop, { foreignKey: 'shop_id', targetKey: 'id' });
+Addresses_Shop.belongsTo(Set, { foreignKey: 'shop_id', sourceKey: 'id' });
+
 Users.hasMany(PurchaseOrders, { foreignKey: 'user_id', targetKey: 'id' });
 PurchaseOrders.belongsTo(Users, { foreignKey: 'user_id', sourceKey: 'id' });
 
@@ -250,6 +279,7 @@ module.exports = {
     // LoginHistory,
     // Roles,
     Addresses,
+    Addresses_Shop,
     PurchaseOrders,
     Set,
     Receipt
