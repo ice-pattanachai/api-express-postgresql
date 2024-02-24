@@ -12,13 +12,13 @@ router.post('/', jsonParser, function (req, res, next) {
       const token = req.headers.authorization.split(' ')[1];
       var decoded = jwt.verify(token, secret);
       console.log('|Authen username = ' + decoded.username + '| ' + '|Roles = ' + decoded.roles + '| ');
-      res.json({ status: 'ok', decoded, token: req.headers.authorization });
+      res.json({ status: 200, decoded, token: req.headers.authorization });
     } else {
       throw new Error('Authorization header is missing or undefined')
     }
 
   } catch (err) {
-    res.json({ status: 'error', message: err.message });
+    res.json({ status: 500, message: err.message });
   }
 });
 
@@ -27,12 +27,10 @@ router.post('/revoke', jsonParser, function (req, res, next) {
     if (req.headers.authorization && req.headers.authorization !== 'undefined') {
       const token = req.headers.authorization.split(' ')[1];
       console.log('Revoking Token:', token);
-      res.json({ status: 'ok', message: 'Token revoked successfully' });
-    } else {
-      throw new Error('Authorization header is missing or undefined')
+      res.json({ status: 200, message: 'Token revoked successfully' });
     }
   } catch (err) {
-    res.json({ status: 'error', message: err.message });
+    res.json({ status: 500, message: err.message });
   }
 });
 
