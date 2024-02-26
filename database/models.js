@@ -229,15 +229,18 @@ const PurchaseOrders = sequelize.define('purchase_orders', {
     },
 }, { schema: process.env.SCHEMA, })
 
-const Set = sequelize.define('sets_up_shop', {
+const Set = sequelize.define('shop', {
     shopname: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+    },
+    shoptax: {
+        type: DataTypes.STRING,
+        allowNull: false,
     },
     img_promptpay_path: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
     },
 
 }, { schema: process.env.SCHEMA, })

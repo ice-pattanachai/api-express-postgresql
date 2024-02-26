@@ -3,37 +3,6 @@ const express = require('express');
 const router = express.Router();
 const { Receipt, PurchaseOrders } = require('../../database/models');
 
-// router.post('/add', async (req, res, next) => {
-//     const data = req.body;
-//     try {
-//         const {
-//             order_receipt_number,
-//             receipt_make_payment,
-//             receipt_visibility,
-//             receipt_status,
-//             receipt_confirm_payment,
-//             payment_format,
-//         } = data;
-
-//         console.log("Body :", data);
-
-//         const newReceipt = await Receipt.create({
-//             order_receipt_number,
-//             receipt_make_payment,
-//             receipt_visibility,
-//             receipt_status,
-//             receipt_confirm_payment,
-//             payment_format,
-//         });
-
-//         console.log("SQL Query:", newReceipt.toString());
-//         console.log("Create Receipt Result:", newReceipt);
-//         res.status(201).json({ message: 'Succeed', status: 'ok', Receipt: newReceipt });
-//     } catch (error) {
-//         console.error("Sequelize Error:", error);
-//         next(error);
-//     }
-// });
 router.post('/add', async (req, res, next) => {
     const data = req.body;
     try {
@@ -43,8 +12,6 @@ router.post('/add', async (req, res, next) => {
             postalcode,
             phone,
             status,
-            // parcel_number,
-            // ^new
             order_receipt_number,
             receipt_make_payment,
             receipt_visibility,
@@ -61,8 +28,6 @@ router.post('/add', async (req, res, next) => {
             postalcode,
             phone,
             status,
-            // parcel_number,
-            // ^new
             order_receipt_number,
             receipt_make_payment,
             receipt_visibility,
@@ -109,7 +74,7 @@ router.post('/search/id', async (req, res, next) => {
             },
         });
 
-        res.status(200).json({ message: 'Success', status: 'ok', data });
+        res.status(200).json({ message: 'Success', statusCode: 200, data });
     } catch (error) {
         next(error);
     }

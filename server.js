@@ -28,6 +28,7 @@ const CheckPassword = require('./content/check_password');
 const PurchaseOrders = require('./content/products/purchase_orders');
 const Receipt = require('./content/products/receipt');
 const timeserver = require('./content/time');
+const shop = require('./content/shop/addresses');
 
 app.use('/test', select);
 app.use('/api/login_seller', login_seller);
@@ -49,6 +50,7 @@ app.use('/api/check_password', CheckPassword);
 app.use('/api/purchase_orders', PurchaseOrders)
 app.use('/api/receipt', Receipt)
 app.use('/api/time', timeserver)
+app.use('/api/shop', shop)
 
 app.get('/', (req, res) => {
   res.send('<h3>/help</h3>')

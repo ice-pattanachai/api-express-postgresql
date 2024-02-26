@@ -22,14 +22,8 @@ router.post('/add', async (req, res, next) => {
     } = data;
 
     const newOrders = await PurchaseOrders.create({
-      // addresses_name,
-      // address,
-      // postalcode,
-      // phone,
       quantity,
       total_price,
-      // status,
-      // parcel_number,
       user_id,
       product_id,
       receipt_id,
